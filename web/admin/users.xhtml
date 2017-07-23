@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:spring="http://www.springframework.org/tags"
+      xml:lang="en" lang="en">
+<h:head>
+    <title>Title</title>
+    <spring:url value="/resources/css/main.css" var="mainCss"/>
+</h:head>
+<h:body>
+    <h:outputStylesheet name="${mainCss}"/>
+    <h:form id="form">
+        <p:growl id="msgs" showDetail="true"/>
+
+        <p:dataTable id="users" var="user" value="#{editUserController.userSet}" editable="true"
+                     resizableColumns="true"    style="margin-bottom:20px">
+            <f:facet name="header">
+                User Editing
+                <p:commandButton id="toggler" type="button" value="Columns" style="float:right"
+                                 icon="ui-icon-calculator"/>
+                <p:columnToggler datasource="users" trigger="toggler"/>
+            </f:facet>
+
+
+            <p:ajax event="rowEdit" listener="#{editUserController.onRowEdit}" update=":form:msgs"/>
+            <p:ajax event="rowEditCancel" listener="#{editUserController.onRowCancel}" update=":form:msgs"/>
+
+            <p:column headerText="Name">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{user.firstName}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{user.firstName}" style="width:100%"
+                                                       label="UserFirstName"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Surename">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{user.lastName}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{user.lastName}" style="width:100%"
+                                                       label="UserLastName"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="login">
+                <h:outputText value="#{user.login}"/>
+            </p:column>
+
+            <p:column headerText="Email">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{user.email}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{user.email}" style="width:100%"
+                                                       label="UserLastName"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Enable">
+                <p:cellEditor>
+                    <f:facet name="output"><p:selectBooleanCheckbox value="#{user.enable}" disabled="true"/></f:facet>
+                    <f:facet name="input"><p:selectBooleanCheckbox value="#{user.enable}"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Edit" style="width:32px">
+                <p:rowEditor/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>

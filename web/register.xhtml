@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:spring="http://www.springframework.org/tags"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view locale="#{localeController.locale}" encoding="UTF-8" contentType="text/html">
+
+    <h:head>
+        <title></title>
+        <spring:url value="/resources/css/main.css" var="mainCss"/>
+    </h:head>
+    <h:body>
+        <h:form enctype="multipart/form-data">
+            <p:panel id="panel" header="#{app['label.regestration']}" style="margin-bottom:10px;">
+                <table>
+                    <tr>
+                        <td><p:messages id="messages" autoUpdate="true" closable="true"/></td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <td><h:outputText for="firstName" value="#{app['label.firstName']}"/></td>
+
+                        <td>
+                            <p:inputText id="firstName" value="#{userJsfController.user.firstName}" label="First name"
+                                         required="true" requiredMessage="#{msg['message.firstname.requered']}">
+                                <f:validator validatorId="lengthCustomValidator"/>
+                                <f:attribute name="minimum" value="2"/>
+                                <f:attribute name="maximum" value="30"/>
+                                <f:attribute name="message"
+                                             value="#{app['label.firstName']}.#{msg['message.lengthName.validate']}"/>
+                            </p:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText for="lastName" value="#{app['label.lastName']}"/></td>
+                        <td>
+                            <p:inputText id="lastName" value="#{userJsfController.user.lastName}" label="Second name"
+                                         required="true"
+                                         requiredMessage="#{msg['message.lastName.requered']}">
+                                <f:validator validatorId="lengthCustomValidator"/>
+                                <f:attribute name="minimum" value="2"/>
+                                <f:attribute name="maximum" value="30"/>
+                                <f:attribute name="message"
+                                             value="#{app['label.lastName']}.#{msg['message.lengthName.validate']}"/>
+                            </p:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText for="email" value="#{app['label.email']}"/></td>
+                        <td><p:inputText id="email" value="#{userJsfController.user.email}" size="50" label="email"
+                                         required="true" requiredMessage="#{msg['message.email.requered']}">
+                            <f:validator binding="#{emailValidator}"/>
+                        </p:inputText></td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText for="login" value="#{app['label.login']}"/></td>
+                        <td><p:inputText id="login" value="#{userJsfController.user.login}" label="login"
+                                         required="true" requiredMessage="#{msg['message.login.requered']}">
+                            <f:validator validatorId="lengthCustomValidator"/>
+                            <f:attribute name="minimum" value="3"/>
+                            <f:attribute name="maximum" value="30"/>
+                            <f:attribute name="message"
+                                         value="#{app['label.login']}.#{msg['message.lengthLogin.validate']}"/>
+                            <f:validator binding="#{loginValidator}"/>
+                        </p:inputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h:outputText for="german" value="#{app['label.birthday']}"/></td>
+                        <td>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <p:calendar id="german" value="#{userJsfController.date}"
+                                            locale="ru_RU" navigator="true" pattern="dd-MM-yyyy"
+                                            label="#{app['label.birthday']}" required="true"
+                                            requiredMessage="#{msg['message.birthday.requered']}"/>
+                            </h:panelGrid>
+                        </td>
+                    </tr>
+                    <sec:authorize access="isAnonymous()">
+                        <tr>
+                            <!--<p:messages id="messages" showDetail="true" autoUpdate="true" />-->
+
+                            <h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+                                <h:outputLabel for="pwd1" value="#{app['label.password']}"/>
+                                <p:password id="pwd1" value="#{userJsfController.user.password}" match="pwd2"
+                                            label="Password:"
+                                            required="true" requiredMessage="#{msg['message.password.requered']}"/>
+
+                                <h:outputLabel for="pwd2" value="#{app['label.confirmPassword']}"/>
+                                <p:password id="pwd2" value="#{userJsfController.user.password}"
+                                            label="Confime password:"
+                                            required="true"
+                                            requiredMessage="#{msg['message.passwordConfirm.requered']}"/>
+                            </h:panelGrid>
+                        </tr>
+                    </sec:authorize>
+                    <tr>
+                        <td><p:commandButton value="#{app['label.save']}" update="panel"
+                                             action="#{userJsfController.save}"/></td>
+                    </tr>
+                </table>
+            </p:panel>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
+

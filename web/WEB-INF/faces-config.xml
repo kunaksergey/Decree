@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+    http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <!--We must add SpringBeanFacesELResolver in JSF -->
+    <!--file config to make possible the injection of Spring bean-->
+    <!--into JSF managed bean.-->
+
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <description>Успешная авторизация</description>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/success.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>editOrder</from-outcome>
+            <to-view-id>/order/editOrder.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
+    <application>
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>ru</supported-locale>
+         </locale-config>
+
+        <resource-bundle>
+            <base-name>application</base-name>
+            <var>app</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>message</base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+</faces-config>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="template"
+                template="/WEB-INF/pages/tiles/main_template.jsp"> <!-- Общий шаблон -->
+
+        <put-attribute name="header" value="/WEB-INF/pages/tiles/header.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/pages/tiles/menu.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="inputBox" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/pages/tiles/footer.jsp"/>
+
+    </definition>
+
+    <definition name="listMessage" extends="template"> <!-- Шаблон главной страницы -->
+        <put-attribute name="content" value="/WEB-INF/pages/listMessage.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/pages/login/login.jsp"/>
+        <put-attribute name="inputBox" value="/WEB-INF/pages/tiles/inputBox.jsp"/>
+    </definition>
+    <definition name="userList"  extends="template">
+        <put-attribute name="content" value="/WEB-INF/pages/admin/userList.jsp"/>
+    </definition>
+
+</tiles-definitions>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:form id="form">
+    <p:dataList value="#{listOrderByStatus}" var="order" type="unordered" itemType="none" paginator="true" rows="10"
+                styleClass="paginated">
+        <f:facet name="header">
+            Paginator
+        </f:facet>
+        <!--<p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">&ndash;&gt;-->
+        <!--&lt;!&ndash;<f:setPropertyActionListener value="#{car}" target="#{dataListView.selectedCar}" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<h:outputText value="#{car.brand}, #{car.year}" />&ndash;&gt;-->
+        <!--</p:commandLink>&ndash;&gt;-->
+        <h:commandLink action="editOrder" actionListener="#{orderCreateJsfController.changeOrder(order.id)}"
+                       value="#{order.description}" style="display:inline-block"/>
+    </p:dataList>
+
+
+</h:form>
+</html>
