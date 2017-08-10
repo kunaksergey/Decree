@@ -1,6 +1,7 @@
 package ua.shield.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -9,7 +10,7 @@ import java.util.*;
  */
 @Entity
 @Table(name="users")
-public class User {
+public class User implements Serializable{
 
     private int id;
     private String firstName;

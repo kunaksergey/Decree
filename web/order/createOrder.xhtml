@@ -19,10 +19,23 @@
 
             <table>
                 <tr>
-                    <td><h:outputText for="descriptionOrder" value="#{app['label.firstName']}"/></td>
+                    <td><h:outputText for="captionOrder" value="#{app['label.caption']}"/></td>
 
                     <td>
-                        <p:inputText id="descriptionOrder" value="#{orderCreateJsfController.order.description}"
+                        <p:inputText id="captionOrder" value="#{orderCreateJsfController.order.caption}"
+                                        required="true" requiredMessage="#{msg['message.caption.requered']}">
+                            <f:validator validatorId="lengthCustomValidator"/>
+                            <f:attribute name="minimum" value="2"/>
+                            <f:attribute name="maximum" value="30"/>
+                     </p:inputText>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><h:outputText for="descriptionOrder" value="#{app['label.description']}"/></td>
+
+                    <td>
+                        <p:inputTextarea rows="10" cols="50" id="descriptionOrder" value="#{orderCreateJsfController.order.description}"
                                      label="First name"
                                      required="true" requiredMessage="#{msg['message.firstname.requered']}">
                             <f:validator validatorId="lengthCustomValidator"/>
@@ -30,17 +43,22 @@
                             <f:attribute name="maximum" value="30"/>
                             <f:attribute name="message"
                                          value="#{app['label.firstName']}.#{msg['message.lengthName.validate']}"/>
-                        </p:inputText>
+                        </p:inputTextarea>
                     </td>
                 </tr>
             </table>
         </p:panel>
         <div>
-            <p:pickList id="pickList" value="#{orderCreateJsfController.users}" var="user"
-                        itemValue="#{user}" itemLabel="#{user.lastName} #{user.firstName}" showSourceControls="true" showTargetControls="true" showCheckbox="true" responsive="true"
+            <p:pickList id="pickList" converter="primeFacesPickListConverter" value="#{orderCreateJsfController.users}" var="user"
+                        itemValue="#{user}" itemLabel="#{user.lastName} #{user.firstName}"
+                        showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                        responsive="true"
                         showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >
             </p:pickList>
         </div>
+        <p:commandButton value="Reset" type="reset" />
+        <p:commandButton value="Save" id="save" actionListener="#{orderCreateJsfController.save}" ajax="false" />
+
     </h:form>
 </h:body>
 </html>

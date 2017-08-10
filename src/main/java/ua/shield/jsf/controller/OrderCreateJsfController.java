@@ -1,7 +1,11 @@
 package ua.shield.jsf.controller;
 
 import org.primefaces.model.DualListModel;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import ua.shield.entity.Order;
+import ua.shield.entity.Sign;
 import ua.shield.entity.User;
 import ua.shield.service.OrderService;
 import ua.shield.service.UserService;
@@ -11,9 +15,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Created by sa on 18.07.17.
@@ -32,16 +35,13 @@ public class OrderCreateJsfController {
 
     private Order order;
 
-    {
-        order = new Order();
-    }
-
     @PostConstruct
      public void init() {
         //Users
+        order = new Order();
         List<User> usersSource = new ArrayList<>(jpaUserService.findAll());
-        List<User> usersTarget = new ArrayList<User>();
-        users = new DualListModel<User>(usersSource, usersTarget);
+        List<User> usersTarget = new ArrayList<>();
+        users = new DualListModel<>(usersSource, usersTarget);
     }
 
     public Order getOrder() {
@@ -75,5 +75,26 @@ public class OrderCreateJsfController {
     public void changeOrder(String orderId){
         int id=Integer.parseInt(orderId);
         this.order=jpaOrderService.findById(id);
+    }
+
+    public void save(){
+        System.out.println("Записываем");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            User owner = jpaUserService.findByLogin(authentication.getName());
+            order.setOwner(owner);
+            order.setOrderDateTimeCreated(LocalDateTime.now());
+            List<User> target = users.getTarget();
+            for (User user:target) {
+                order.getSetSing().add(new Sign(order,user));
+            }
+            System.out.println(order);
+            jpaOrderService.save(order);
+
+        }else{
+          //Тут код если ползователь не залогинился
+        }
+
+
     }
 }

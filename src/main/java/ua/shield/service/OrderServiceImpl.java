@@ -1,5 +1,6 @@
 package ua.shield.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,10 @@ import java.util.*;
 @Transactional
 public class OrderServiceImpl
         implements OrderService {
+
+    @Autowired
+    private OrderResository orderResository;
+
     Map<Integer,Order> mapOrder=new HashMap<>();
     {
         mapOrder.put(1,new Order(1,0,"Подготовленный документ №1"));
@@ -23,7 +28,8 @@ public class OrderServiceImpl
     }
     @Override
     public Order save(Order document) {
-        return null;
+        return
+                orderResository.save(document);
     }
 
     @Override
