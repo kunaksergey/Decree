@@ -1,6 +1,7 @@
 package ua.shield.service;
 
 import ua.shield.entity.User;
+import ua.shield.jsf.exeption.UserIsNotRegisteredExeption;
 
 import java.util.List;
 import java.util.Set;
@@ -15,4 +16,5 @@ public interface UserService {
     User findByEmail(String login);
     User save(User user);
     void delete(User user);
+    User  registeredUser() throws UserIsNotRegisteredExeption;
 }

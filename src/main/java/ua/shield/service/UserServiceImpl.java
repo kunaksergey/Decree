@@ -2,10 +2,14 @@ package ua.shield.service;
 
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.shield.entity.User;
+import ua.shield.jsf.exeption.UserIsNotRegisteredExeption;
 
 import javax.persistence.EntityManager;
 import javax.swing.*;
@@ -48,5 +52,15 @@ public class UserServiceImpl implements UserService {
 
     public void delete(User user) {
         userResository.delete(user);
+    }
+
+    @Override
+    public User registeredUser() throws UserIsNotRegisteredExeption {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            return userResository.findByLogin(authentication.getName());
+        } else {
+            throw new UserIsNotRegisteredExeption("User is not registered");
+        }
     }
 }

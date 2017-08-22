@@ -6,19 +6,48 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:form id="form">
-    <p:dataList value="#{listOrderByStatus}" var="order" type="unordered" itemType="none" paginator="true" rows="10"
-                styleClass="paginated">
+
+    <p:dataList value="#{listOrderByStatus}" var="order" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
         <f:facet name="header">
-            Paginator
+            Список документов
         </f:facet>
-        <!--<p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">&ndash;&gt;-->
-        <!--&lt;!&ndash;<f:setPropertyActionListener value="#{car}" target="#{dataListView.selectedCar}" />&ndash;&gt;-->
-        <!--&lt;!&ndash;<h:outputText value="#{car.brand}, #{car.year}" />&ndash;&gt;-->
-        <!--</p:commandLink>&ndash;&gt;-->
-        <h:commandLink action="editOrder" actionListener="#{orderCreateJsfController.changeOrder(order.id)}"
-                       value="#{order.description}" style="display:inline-block"/>
+        <p:commandLink update=":form:orderDetail" oncomplete="PF('orderDialog').show()" title="View Detail" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+            <f:setPropertyActionListener value="#{order}" target="#{orderJsfController.selectedOrder}" />
+            <h:outputText value="#{order.id}, #{order.caption}" />
+        </p:commandLink>
+        <h:outputText value="#{order.id}, #{order.caption}" style="display:inline-block"/>
+
+        <h:commandLink action="moveToDetailOrder"
+                       value="#{order.description}" style="display:inline-block">
+            <f:setPropertyActionListener value="#{order}" target="#{orderJsfController.selectedOrder}" />
+        </h:commandLink>
+
     </p:dataList>
 
+    <p:dialog header="Order Info" widgetVar="orderDialog" modal="true" showEffect="blind" hideEffect="explode" resizable="true">
+        <p:outputPanel id="orderDetail" style="text-align:center;">
+            <p:panelGrid  columns="2" rendered="#{not empty orderJsfController.selectedOrder}" columnClasses="label,value">
 
+                <h:outputText value="Id:" />
+                <h:outputText value="#{orderJsfController.selectedOrder.id}" />
+
+                <h:outputText value="Year" />
+                <h:outputText value="#{orderJsfController.selectedOrder.caption}" />
+
+            </p:panelGrid>
+
+            <!--ConfirmButton-->
+            <p:commandButton value="Non-Ajax Submit" id="sing"  ajax="false" >
+                <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+            </p:commandButton>
+
+            <!--ConfirmDialog-->
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <!---->
+        </p:outputPanel>
+    </p:dialog>
 </h:form>
 </html>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.shield.entity.Order;
+import ua.shield.entity.User;
 
 import java.util.*;
 
@@ -34,11 +35,24 @@ public class OrderServiceImpl
 
     @Override
     public Order findById(int id) {
-        return mapOrder.get(id);
+        return orderResository.findOne(id);
     }
 
     @Override
     public List<Order> findAll() {
-        return new ArrayList<>(mapOrder.values());
+        return (List<Order>) orderResository.findAll();
+       // return new ArrayList<>(mapOrder.values());
     }
+
+    @Override
+    public List<Order> findAllByOwnerStatusAndSign(int statusId,int userId) {
+        return orderResository.findAllByStatudAndX(statusId,userId);
+    }
+
+    @Override
+    public List<Order> findAllByOwner(User owner) {
+        return orderResository.findAllByOwner(owner);
+    }
+
+
 }

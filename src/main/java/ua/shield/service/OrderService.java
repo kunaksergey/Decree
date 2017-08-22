@@ -12,5 +12,6 @@ public interface OrderService {
     Order save(Order document);
     Order findById(int id);
     List<Order> findAll();
-
+    List<Order> findAllByOwnerStatusAndSign(int statusId,int userId);
+    List<Order> findAllByOwner(User owner);
 }

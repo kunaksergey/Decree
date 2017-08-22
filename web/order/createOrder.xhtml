@@ -5,6 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{localeController.locale}" encoding="UTF-8" contentType="text/html">
 <h:head>
     <title> "#{app['title.create']}"</title>
 </h:head>
@@ -25,8 +26,10 @@
                         <p:inputText id="captionOrder" value="#{orderCreateJsfController.order.caption}"
                                         required="true" requiredMessage="#{msg['message.caption.requered']}">
                             <f:validator validatorId="lengthCustomValidator"/>
-                            <f:attribute name="minimum" value="2"/>
-                            <f:attribute name="maximum" value="30"/>
+                            <f:attribute name="minimum" value="3"/>
+                            <f:attribute name="maximum" value="50"/>
+                            <f:attribute name="message"
+                                         value="#{app['label.caption']}.#{msg['message.caption.validate']}"/>
                      </p:inputText>
                     </td>
                 </tr>
@@ -37,12 +40,12 @@
                     <td>
                         <p:inputTextarea rows="10" cols="50" id="descriptionOrder" value="#{orderCreateJsfController.order.description}"
                                      label="First name"
-                                     required="true" requiredMessage="#{msg['message.firstname.requered']}">
+                                     required="true" requiredMessage="#{msg['message.desription.requered']}">
                             <f:validator validatorId="lengthCustomValidator"/>
-                            <f:attribute name="minimum" value="2"/>
-                            <f:attribute name="maximum" value="30"/>
+                            <f:attribute name="minimum" value="5"/>
+                            <f:attribute name="maximum" value="500"/>
                             <f:attribute name="message"
-                                         value="#{app['label.firstName']}.#{msg['message.lengthName.validate']}"/>
+                                         value="#{app['label.description']}.#{msg['message.description.validate']}"/>
                         </p:inputTextarea>
                     </td>
                 </tr>
@@ -57,8 +60,9 @@
             </p:pickList>
         </div>
         <p:commandButton value="Reset" type="reset" />
-        <p:commandButton value="Save" id="save" actionListener="#{orderCreateJsfController.save}" ajax="false" />
+        <p:commandButton value="Save" id="save" actionListener="#{orderCreateJsfController.save}" ajax="false" action="moveMenu"/>
 
     </h:form>
 </h:body>
+</f:view>
 </html>

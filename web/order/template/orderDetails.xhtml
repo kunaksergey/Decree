@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:outputText value="#{orderJsfController.selectedOrder.id}, #{orderJsfController.selectedOrder.caption}"/>
+    <h:outputText value="#{orderJsfController.selectedOrder.description}"/>
+</f:view>
+<p:dataTable var="sing" value="#{orderJsfController.selectedOrder.setSign}">
+    <p:column headerText="User">
+        <h:outputText value="#{sing.user.firstName} #{sing.user.lastName}" />
+    </p:column>
+
+    <p:column headerText="Time">
+        <h:outputText value="#{sing.dateTimeSign}" />
+    </p:column>
+</p:dataTable>
+<div class="act">
+    <ui:insert name="act">
+
+    </ui:insert>
+</div>
+</html>

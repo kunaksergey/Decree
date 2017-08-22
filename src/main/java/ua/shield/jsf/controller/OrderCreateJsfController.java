@@ -72,10 +72,7 @@ public class OrderCreateJsfController {
         this.users = users;
     }
 
-    public void changeOrder(String orderId){
-        int id=Integer.parseInt(orderId);
-        this.order=jpaOrderService.findById(id);
-    }
+
 
     public void save(){
         System.out.println("Записываем");
@@ -86,10 +83,11 @@ public class OrderCreateJsfController {
             order.setOrderDateTimeCreated(LocalDateTime.now());
             List<User> target = users.getTarget();
             for (User user:target) {
-                order.getSetSing().add(new Sign(order,user));
+                order.getSetSign().add(new Sign(order,user));
             }
             System.out.println(order);
             jpaOrderService.save(order);
+            order=new Order();
 
         }else{
           //Тут код если ползователь не залогинился

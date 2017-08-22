@@ -47,7 +47,7 @@ public class Order {
     @OneToMany(mappedBy = "order",
             cascade =  CascadeType.ALL
            )
-    private Set<Sign> setSing=new LinkedHashSet<>();
+    private Set<Sign> setSign=new LinkedHashSet<>();
 
     public Order() {
     }
@@ -119,12 +119,12 @@ public class Order {
         this.caption = caption;
     }
 
-    public Set<Sign> getSetSing() {
-        return setSing;
+    public Set<Sign> getSetSign() {
+        return setSign;
     }
 
-    public void setSetSing(Set<Sign> setSing) {
-        this.setSing = setSing;
+    public void setSetSign(Set<Sign> setSing) {
+        this.setSign = setSign;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class Order {
                 ", caption='" + caption + '\'' +
                 ", description='" + description + '\'' +
                 ", file=" + Arrays.toString(file) +
-                ", mapSing=:" + setSing +
+                ", mapSing=:" + setSign +
                 '}';
     }
 }
